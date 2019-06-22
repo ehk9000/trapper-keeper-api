@@ -1,10 +1,15 @@
 const express = require('express');
+// importing the express library from dependencies
 const cors = require('cors'); 
+// importing cors from dependencies. Cors is a protocol that prevents domains to make requests to other domains
 
 const app = express();
+// app variable that is the invocation of express method. allows us access to express libray 
 
 app.use(cors());
+// invoking cors with our app
 app.use(express.json());
+// invoking express with our app. 
 
 app.locals.notes = [
   { 
@@ -40,23 +45,34 @@ app.locals.notes = [
     background:'#FFF'
   }
 ]
+// an array of objects that our server will have when it is spun up each time
 
 app.get('/api/v1/notes', (request, response) => {
+  // handling for get requests to the route /api/v1/notes. 
   return response.status(200).json(app.locals.notes);
+  // it should give the response handling of 200 and return json.app.locals.notes
 });
 
+
 app.post('/api/v1/notes', (request, response) => {
+  // handling for post reuests to notes route. 
   const { title, list } = request.body;
+  // destructuring the request body 
 
   if (!title || !list) {
     return response.status(422).json('Please provide title and at least one list item');
   }
+  // handling if when the body comes in the title or list is missing. if that is the case, return response code 422 with message Please provide title and at least one list item'
 
   const newNote = request.body;
+  // setting request body to a variable 
 
   app.locals.notes.push(newNote);
+  // pushing the newNote object to locals.notes array 
   response.status(201).json(newNote);
+  // returning status code 201 if successfully added note to server array
 });
+
 
 app.get('/api/v1/notes/:id', (request, response) => {
   const note = app.locals.notes.find(note => note.id == request.params.id);
