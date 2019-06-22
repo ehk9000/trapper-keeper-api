@@ -106,30 +106,43 @@ app.delete('/api/v1/notes/:id', (request, response) => {
 });
 
 app.put('/api/v1/notes/:id', (request, response) => {
+  // handling for put requests for /notes/:id
   const { title, list, background } = request.body;
+  // destructuring body request
   let { id } = request.params;
+  // destructuring id from route 
   id = parseInt(id);
+  // parsing id from route
   let noteWasFound = false;
+  // initializing variable noteWasFound to false by default
   const newNotes = app.locals.notes.map(note => {
+    // assigning variable to map method over notes in server array
     if (note.id == id) {
       noteWasFound = true;
       return { title, list, id, background }
+      // if note.id was found assign note was found to true and return the destructured note object
     } else {
       return note
+      // if note was not found in map return the note
     }
   });
 
   if (!title || !list) {
     return response.status(422).json('Please provide a title and a list item');
+    // if body is missing title or list item return status code 422 with error message
   }
 
   if (!noteWasFound) {
+    // if note was not found is false return status code 404 with error message
     return response.status(404).json('Note not found');
   }
 
   app.locals.notes = newNotes
+  // reassigning the server array to the mapped array with updated object
 
   return response.sendStatus(204);
+  // if successful return status code 204
 });
 
 module.exports = app;
+// exporting app
