@@ -55,7 +55,7 @@ app.get('/api/v1/notes', (request, response) => {
 
 
 app.post('/api/v1/notes', (request, response) => {
-  // handling for post reuests to notes route. 
+  // handling for post requests to /notes route. 
   const { title, list } = request.body;
   // destructuring the request body 
 
@@ -75,24 +75,33 @@ app.post('/api/v1/notes', (request, response) => {
 
 
 app.get('/api/v1/notes/:id', (request, response) => {
+  // handling for get requests to /notes/:id
   const note = app.locals.notes.find(note => note.id == request.params.id);
+  // assigning variable to find method to find the id of the note that matches the id of the route 
 
   if (!note) {
+    // if note is not found return 404 with error message 
     return response.status(404).json('Note not found');
   } else {
+    // if it was found return response code 200 with the note jsoned
     return response.status(200).json(note);
   }
 });
 
 app.delete('/api/v1/notes/:id', (request, response) => {
+  // handling for delete requests for /notes/:id
   const noteIndex = app.locals.notes.findIndex(note => note.id == request.params.id);
+  // assigning variable to findIndex method to find the index of the id of the note that matches the id of the route 
 
   if (noteIndex === -1) {
+    // if the method was falsy return 404 with error message
     return response.status(404).json('Note not found');
   } else {
+    // if note was found splice out the note object using the found index.
     app.locals.notes.splice(noteIndex, 1);
 
     return response.sendStatus(204);
+    // if sliced out successfully return status code 204
   }
 });
 
