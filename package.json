@@ -20,8 +20,11 @@
   "homepage": "https://github.com/tiffanybacher/trapper-keeper-api#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.0",
-    "jest": "^24.8.0"
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.4",
+    "pg": "^7.12.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
