@@ -41,6 +41,10 @@ app.locals.notes = [
   }
 ]
 
+app.get('/', (request, response) => {
+  return response.status(200).json('Hello! Welcome to Trapper-Keeper');
+});
+
 app.get('/api/v1/notes', (request, response) => {
   return response.status(200).json(app.locals.notes);
 });
